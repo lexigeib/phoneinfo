@@ -10,9 +10,38 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <title>Homework 5</title>
     <style type="text/css">
-        body{
-        background-image: linear-gradient(#2CD8D5 0%, #C5C1FF 56%, #FFBAC3 100%);
-    }
+        @media only screen and (min-width: 350px) and (min-height: 568px) and (max-width: 1920px) and (max-height: 1280px) {
+            *{margin:0; padding:0; font-size: 8px;}
+            body{
+                background-image: linear-gradient(#2CD8D5 0%, #C5C1FF 56%, #FFBAC3 100%);
+            }
+            table{
+                width: 90%;
+                border-collapse: separate;
+                border-spacing: 0 1%; 
+                margin-left:auto; 
+                margin-right:auto;
+            }
+            table td{
+                padding: 2%;
+            }
+            .cover{
+                width: 20%;
+                text-align: center;
+            }
+            img{
+                width: 50%;
+            }
+            .middle{
+                width: 50%;
+                text-align: center;
+                font-family: calibri;
+            }
+            li{
+                list-style-type: none;
+                padding: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -20,7 +49,7 @@
             <tr>
                 <td class="cover">
                     <img src="Images/Divergent.jpg"><br>
-                    <a href ="var ref = cordova.InAppBrowser.open('https://en.wikipedia.org/wiki/Divergent_(novel)', '_system', 'location=yes');">
+                    <a href ="#"  onclick="var ref = cordova.InAppBrowser.open('https://en.wikipedia.org/wiki/Divergent_(novel)', '_system', 'location=yes');">
                             en.wikipedia.org
                     </a>
                 </td>
