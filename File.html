@@ -13,31 +13,32 @@
         app.initialize();
         document.addEventListener('deviceready', onDeviceReady, false);
         function onDeviceReady(){
-            var size =0;
-            window.requestFileSystem(LocalFileSystem.PERSISTENT, size, workingFS, FileError);
+          var size =0;
+          window.requestFileSystem(LocalFileSystem.PERSISTENT, size, onFSsuccess, onFSerror);
         }
-        function workingFS(FS){
-            var fileInput = FS.root.createReader();
-            fileInput.readEntries(parseFile, FileError);
-        }
-        function FileError(error){
-            alert ("Error " + error);
-        }
-        function parseFile (entries) {
-            var dirs='Directories:<ul>';
-            var files='Files: <ul>';
-            for (var i=0, len=entries.length; i< len; i++) {
-	               if (entries[i].isDirectory) {
-    	dirs +='<li>' + entries[i].fullPath+ '</li>';
-	}
-	else
-		files +='<li>' + entries[i].fullPath+ '</li>'; 
-	}
-	dirs +='</ul>';
-	files +='</ul>';
-	document.getElementById("fileslist").innerHTML += dirs + files;
-	alert ("Finished Parsing");
+        function onFSsuccess(FS){
+  var Fin = FS.root.createReader();
+  Fin.readEntries(parseDir, onFSerror);
 }
+function onFSerror(err){
+  alert ("Error " + err);
+}
+  function parseDir (entries) {
+    var dirs='Directories:<ul>';
+    var files='Files: <ul>';
+    for (var i=0, len=entries.length; i< len; i++) {
+    if (entries[i].isDirectory) {
+        dirs +='<li>' + entries[i].fullPath+ '</li>';
+    }
+    else{
+      files +='<li>' + entries[i].fullPath+ '</li>'; 
+    }
+    dirs +='</ul>';
+    files +='</ul>';
+    document.getElementById("fileslist").innerHTML += dirs + files;
+    alert ("done parsing");
+    }
+  }
     </script>
     <script type="text/javascript" src="cordova.js"></script>
 </head>
