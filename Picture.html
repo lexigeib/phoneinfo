@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <title>Camera</title>
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script type="text/javascript" src="cordova.js"></script>
+</head>
+<body>
+<script>
+    document.addEventListener("deviceReady", onDeviceReady, false);
+    function onDeviceReady(){
+        alert('Device/Camera Ready...');
+        document.getElementById('clicker').addEventListener('click', getImage, false);
+        document.getElementById('borderclicker').addEventListener('click', getborderImage, false);
+        alert('button ready...');
+    }
+    function getImage(){
+        let options = {
+            quality : 20,
+            allowEdit : true,
+            destinationType : Camera.DestinationType.FILE_URI,
+            sourceType : Camera.MediaType.CAMERA,
+            encodingType : Camera.EncodingType.JPEG,
+		    cameraDirection : Camera.Direction.BACK,
+		    targetWidth: 300,
+		    targetHeight : 400
+		};
+        navigator.camera.getPicture(picSuccess, picError, options);
+    }
+    function getborderImage(){
+        let options = {
+            quality : 20,
+            allowEdit : true,
+            destinationType : Camera.DestinationType.FILE_URI,
+            sourceType : Camera.MediaType.CAMERA,
+            encodingType : Camera.EncodingType.JPEG,
+		    cameraDirection : Camera.Direction.BACK,
+		    targetWidth: 300,
+		    targetHeight : 400
+		};
+        navigator.camera.getPicture(borderpicSuccess, picError, options);
+    }
+    function picSuccess(ImageURI) {
+	var msg = document.getElementById('msg');
+	msg.textContent = ImageURI;
+	var smallImage = document.getElementById('cameraImage');
+	smallImage.src = ImageURI;
+}
+    function picError(message) {
+	var msg = document.getElementById('msg');
+	msg.textContent = 'Capture error: ' + message;
+	
+}
+    function borderpicSuccess(ImageURI){
+	   var Div = document.getElementById('fill');
+        var Div2 = document.getElementById('fill2');
+        var Div3 = document.getElementById('fill3');
+        var Div4 = document.getElementById('fill4');
+	   Div.src=ImageURI;
+        Div2.src=ImageURI;
+        Div3.src=ImageURI;
+        Div4.src=ImageURI;
+    }
+    </script>
+<script type="text/javascript">
+        app.initialize();
+    </script>
+    <div class="center" style="margin-left: 50px"><img id="fill" class="left" style="height: 20px; width: 255px;  padding:0;margin-bottom: -15px;"><div class="horizontal"><img id="fill3" style="height: 210px; width: 20px;margin-right: -5px; margin-bottom:-25px;max-width: 20px;float: left;margin-top:10px"><img class="centered" id="cameraImage" style="width:215px; height:200px; margin-left: -5px;
+margin-right: -20px; padding-left: 10px;margin-top: 15px" src="img/logo.png"/><img id="fill4" style="; height: 226px; width: 20px; padding:0; margin-left:20px;margin-top: -210px;margin-bottom: -18px"></div>
+    <img class="right" id="fill2" style="height: 20px; width: 255px; padding:0; margin-left: 0px; margin-top: -15px"></div>
+    <p id="msg"></p>
+    <button id = "clicker">Snap Pics</button>
+    <button id = "borderclicker">Get Border Pic</button>
+</body>
+
+</html>

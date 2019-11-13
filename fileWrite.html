@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <title>File System Read</title>
+        <script type="text/javascript">
+            document.addEventListener('deviceready', onDeviceReady, false);
+            function onDeviceReady(){
+              var size =0;
+              window.requestFileSystem(LocalFileSystem.PERSISTENT, size, fileSuccess, fileError);
+            }
+            function fileSuccess(FS){
+               inRoot=FS.root;
+               inRoot.getFile('sample.txt', {create: true, exclusive:false}, function(fileEntry) {setUP(fileEntry, null, true);}, creationError);
+               alert ("File Sys. Succesfully read."); 
+            }
+            function getItReady(file)
+            {
+               writeFile(file, null);
+            }
+            function readIT() {
+            //notice the ugly code for the file method. It can be beautified
+               exampleFile.file(function (file) {
+                  var reader = new FileReader();
+                  reader.onloadend = function() {
+                      document.getElementById("filedata").innerHTML = this.result;
+                  };
+                  reader.readAsText(file);
+                }, readError);
+            }
+            function setUP(fileIn, x, isAppend){
+              //setUP the file pointer for later use
+                exampleFile=fileIn;
+                
+            }
+            function fileError(err) {
+              alert ("FS Error " + err);
+            }
+            function readError (err){
+               alert ("Read Error " + err);
+            }
+            function writingError (err){
+               alert ("Write Error " + err);
+            }
+            function creationError (err){
+               alert ("Create Error " + err);
+            }
+            function writeIT() {
+              exampleFile.createWriter(writerPrompt, writingError);
+            }
+            function writerPrompt(writer) {
+               str=window.prompt("What do you wish to write?: ");
+               writer.seek(0);
+               writer.write(str);
+            }
+            function appendIT(){
+               exampleFile.createWriter(writerPrompt2, writingError);
+            }
+            function writerPrompt2(writer) {
+               str2=window.prompt("What do you wish to append to the original string"+str+": ");
+               writer.seek(writer.length);
+               writer.write(str2); 
+            }
+    </script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</head>
+
+<body>
+  <div id="buttons">
+    <button type="button" onclick="writeIT()">Write Properly</button>
+    <button type="button" onclick="readIT()">Read FileSystem</button>
+    <button type="button" onclick="appendIT()">Add From FileSystem</button>
+  </div>
+    <div id="filedata"></div>
+</body>
+</html>
