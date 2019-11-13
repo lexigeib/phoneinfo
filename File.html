@@ -10,23 +10,24 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <title>Hello World</title>
      <script>
-      app.initialize();
-window.onload = function(){
-  var size =0;
-  window.requestFileSystem(LocalFileSystem.PERSISTENT, size, workingFS, FileError);
-}
+        app.initialize();
+        document.addEventListener('deviceready', onDeviceReady, false);
+        function onDeviceReady(){
+            var size =0;
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, size, workingFS, FileError);
+        }
         function workingFS(FS){
-  var fileInput = FS.root.createReader();
-  fileInput.readEntries(parseFile, FileError);
-}
-function FileError(error){
-  alert ("Error " + error);
-}
-function parseFile (entries) {
-  var dirs='Directories:<ul>';
-  var files='Files: <ul>';
-  for (var i=0, len=entries.length; i< len; i++) {
-	if (entries[i].isDirectory) {
+            var fileInput = FS.root.createReader();
+            fileInput.readEntries(parseFile, FileError);
+        }
+        function FileError(error){
+            alert ("Error " + error);
+        }
+        function parseFile (entries) {
+            var dirs='Directories:<ul>';
+            var files='Files: <ul>';
+            for (var i=0, len=entries.length; i< len; i++) {
+	               if (entries[i].isDirectory) {
     	dirs +='<li>' + entries[i].fullPath+ '</li>';
 	}
 	else
